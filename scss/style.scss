@@ -2,10 +2,7 @@
 @font-face {
 	font-family: 'icomoon';
 	src:url('../fonts/icomoon.eot');
-	src:url('../fonts/icomoon.eot?#iefix') format('embedded-opentype'),
-		url('../fonts/icomoon.woff') format('woff'),
-		url('../fonts/icomoon.ttf') format('truetype'),
-		url('../fonts/icomoon.svg') format('svg');
+	src:url('../fonts/icomoon.ttf') format('truetype');
 	font-weight: normal;
 	font-style: normal;
 	}
@@ -25,19 +22,17 @@ a:focus,a:active{outline: none;}
 nav,footer,header,aside{display: block;}
 
 html,body{
-	height: 100%;
-	width: 100%;
 	font-size: 100%;
 	line-height: 1;
 	font-size: 14px;
 	font-size: 18px;
+	width: 100%;
     line-height: 1.6;
 	-ms-text-size-adjust: 100%;
 	-moz-text-size-adjust: 100%;
 	-webkit-text-size-adjust: 100%;
-	overflow-y: auto;
-    overflow-x: hidden;
     font-family: 'Roboto', sans-serif;
+	position: relative;
 }
 input,button,textarea{font-family:inherit;}
 
@@ -51,8 +46,14 @@ img{vertical-align: top; width: 100%;}
 
 h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight: 400;}
 /*--------------------*/
+
 .container {
 	max-width: 1200px;
+	padding: 0 30px;
+	margin: 0 auto;
+	width: 100%;
+}
+.containerFluid{
 	padding: 0 30px;
 	margin: 0 auto;
 	width: 100%;
@@ -140,6 +141,7 @@ select{
     transition: color 0.3s ease-in-out,background-color 0.3s ease-in-out,border-color 0.3s ease-in-out,box-shadow 0.3s ease-in-out;
 	cursor: pointer;
 	font-size: 16px;
+	min-width: 100px;
 }
 .btn-white {
     background-color: #fff;
@@ -197,6 +199,7 @@ select{
     color: #fff;
 }
 
+
 .header {
 	width: 100%;
 	position: fixed;
@@ -205,14 +208,14 @@ select{
     right: 0;
     width: 100%;
     z-index: 1030;
-    background-color: white;
+    background-color: transparent;
     transition: background-color 0.3s,padding 0.3s,box-shadow 0.3s;
     padding: 15px 0;
-	
 	&Container{
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
+		max-width: none;
 		a{
 			width: 24px;
 			height: 24px;
@@ -240,16 +243,78 @@ select{
 				transform: translate(-50%,calc(-50% + 3px));
 			}
 		}
+		button{
+			background-color: #f2a873;
+			color: #fff;
+		}
+	}
+	.header__content-left-side {
+		position: absolute;
+		top: 65px;
+		height: calc(100vh - 65px);
+		left: 0;
+		right: 0;
+		display: flex;
+		flex-direction: column;
+		padding: 50px 30px;
+		overflow: auto;
+		visibility: hidden;
+		opacity: 0;
+		transition: visibility .3s,opacity .3s;
+		background-color: #fff;
+		.header__dec-icon {
+			margin: 0 0 30px;
+			transition: color .3s;
+		}
+		i {
+			font-family: "icomoon";
+			font-style: normal;
+			font-weight: 400;
+			font-variant: normal;
+			text-transform: none;
+			line-height: 1;
+			-webkit-font-smoothing: antialiased;
+			-moz-osx-font-smoothing: grayscale;
+			color: #222831;
+			&:before {
+				content: "";
+			}
+		}
+		.main-nav-list__item:not(:last-child) {
+			margin-bottom: 15px;
+		}
+	}
+	.header__content-left-side.-active {
+		visibility: visible;
+		opacity: 1;
+	}
+	.headerContainerBurgerMenu.-active:before {
+		transform: translate(-50%,-50%) rotate(45deg);
+	}
+	.headerContainerBurgerMenu.-active:after {
+		transform: translate(-50%,-50%) rotate(-45deg);
 	}
 }
-.main{
-    padding-top: 95px;
+
+
+
+.header.-small {
+    background-color: #fff;
+    padding: 15px 0;
+    box-shadow: 0 0 10px rgb(0 0 0 / 10%);
+}
+
+.header.-active {
+    background-color: #fff;
 }
 
 .start{
+	padding-top: 95px;
 	position: relative;
 	background-image: url("https://matrix-destiny.com/wp-content/uploads/2020/10/c9159e14-cd0d-45b0-a346-976ca457f0ae.jpeg");
 	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
 	&Container{
 		position: relative;
 		z-index: 2;
@@ -257,6 +322,10 @@ select{
 		h1{
 			margin-bottom: 120px;
 		}
+		
+	}
+	img{
+		display: none;
 	}
 	&::after{
 		position: absolute;
@@ -288,7 +357,6 @@ select{
 	p{
 		text-align: right;
 		font-style: italic;
-		max-width: 260px;
 	}
 }
 
@@ -323,6 +391,8 @@ select{
 		}
 	}
 }
+
+
 
 .blog{
 	&Container{
@@ -381,6 +451,8 @@ select{
 	}
 }
 
+
+
 .necessity {
 	&Container{
 		h2{
@@ -427,6 +499,8 @@ select{
 		}
 	}
 }
+
+
 
 .discover{
 	p{
@@ -491,8 +565,8 @@ select{
 		&Video{
 			height: 195px;
 			width: 100%;
-			background-image: url(../images/videoPreview.jpg);
 			margin-bottom: 160px;
+			background-repeat: no-repeat;
 		}
 	}
 }
@@ -541,6 +615,8 @@ select{
 		}
 	}
 }
+
+
 
 .contacts{
 	&Container{
@@ -695,5 +771,309 @@ select{
 			margin-bottom: 20px;
 			color: #fff;
 		}
+	}
+}
+
+@media screen and (min-width: 576px) {
+	.btn-lg {
+		min-width: 310px;
+		padding-top: 19px;
+		padding-bottom: 22px;
+	}
+	.blogContainerInner{
+		display: flex;
+		flex-wrap: wrap;
+	}
+
+	.blog-card {
+		margin-bottom: 60px;
+		padding-left: 30px;
+   		padding-right: 30px;
+		flex: 0 0 50%;
+		max-width: 50%;
+	}
+	.btn-with-underline{
+		vertical-align: middle;
+		padding: 25px 85px 25px 20px;
+		width: auto;
+		font-size: 18px;
+	}
+	.blog{
+		.btn-with-underline{
+			display: block;
+			margin: 0 auto;
+			max-width: fit-content;
+		}
+	}
+	.necessity{
+		&Container{
+			&Inner{
+				display: flex;
+				flex-wrap: wrap;
+			
+			}
+			&Item{
+				display: flex;
+				align-items: center;
+				flex-direction: column;
+				flex: 0 0 50%;
+    			max-width: 50%;
+				padding: 0 30px;
+				margin-bottom: 70px;
+			}
+		}
+	}
+	.container{
+		max-width: 540px;
+	}
+	.imageDecoration{
+		&Inner{
+			max-width: 540px;
+			padding: 0 30px;
+			margin: 0 auto;
+		}
+	}
+	.whiteSpace{
+		background-color: #171b21;
+		&Container{
+			padding: 40px 30px;
+			div{
+				background-color: #fff;
+				padding: 40px 60px;
+				p{
+					max-width: none;
+				}
+			}
+		}
+	}
+	.contacts{
+		background-image: url("https://matrix-destiny.com/wp-content/uploads/2020/09/section-contacts-bg.jpg");
+		background-size: cover;
+		background-repeat: no-repeat;
+		background-position: center;
+		padding-bottom: 100px;
+		.contactsContainerInner{
+			position: relative;
+			padding-right: 100px;
+			padding-top: 140px;
+    		padding-bottom: 100px;
+			*{
+				position: relative;
+				z-index: 5;
+			}
+			&::before {
+				content: '';
+				display: block;
+				background-color: #fff;
+				position: absolute;
+				top: 0;
+				right: 0;
+				bottom: 0;
+				width: 9999px;
+			}
+		}
+	}
+}
+
+@media screen and (min-width: 768px) {
+	.container{
+		max-width: 720px;
+	}
+	.start{
+		background: none;
+		padding: 180px 0px;
+		position: relative;
+		padding-bottom: 160px;
+		.startContainer{
+			display: flex;
+			width: 100%;
+			align-items: center;
+			&Flex{
+				display: flex;
+				flex-direction: column;
+				flex: 0 0 50%;
+				max-width: 50%;
+				margin-right: 50px;
+			}
+			
+		}
+		img{
+			display: block;
+			height: 742px;
+			width: 43.5%;
+			object-fit: cover;
+			position: absolute;
+			right: 0;
+			top: 0;
+			z-index: 9;
+		}
+	}
+	.quote{
+		&Container{
+			justify-content: center;
+			p{
+				max-width: 510px;
+			}
+		}
+	}
+	.mdFlex{
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+	}
+	.aboutMethod{
+		.mdFlex{
+			img{
+				width: 260px;
+				object-fit: contain;
+				margin: 0 20px;
+			}
+			div{
+				width: 100%;
+				margin-left: 60px;
+				p{
+					margin-bottom: 50px;
+				}
+			}
+		}
+	}
+	.necessityContainer{
+		max-width: none !important;
+	}
+	.necessityContainerItem{
+		flex: 0 0 33.3333%;
+		max-width: 33.3333%;
+		padding: 0;
+	}
+	.opportunitiesContainer{
+		display: flex;
+		h2{
+			margin-top: 0;
+		}
+		img{
+			width: 260px;
+			height: 478px;
+			padding-right: 20px;
+    		padding-left: 20px;
+		}
+		&Inner{
+			padding-right: 20px;
+			padding-left: 20px;
+		}
+	}
+	.discoverContainer{
+		display: flex;
+		h2{
+			margin-top: 0;
+		}
+		img{
+			width: 260px;
+			height: 390px;
+			padding-right: 20px;
+    		padding-left: 20px;
+		}
+		&Inner{
+			padding-right: 20px;
+			padding-left: 20px;
+			margin-right: 60px;
+		}
+	}
+	.recomendationsContainer{
+		&Inner {
+			display: flex;
+		}
+		&Item{
+			padding-right: 20px;
+    		padding-left: 20px;
+		}
+	}
+	.info{
+		display: flex;
+		background-color: #171b21;
+		&Inner{
+			display: flex;
+			flex-direction: column-reverse;
+			flex: 0 0 58.3333%;
+			max-width: 58.3333%;
+			width: 100%;
+			padding-right: 20px;
+			padding-left: 20px;
+			background-color: #171b21;
+			.imageDecorationInner{
+				padding: 0;
+			}
+		}
+		.container {
+			max-width: none;
+			padding: 0;
+			margin: 0;
+			width: auto;
+		}
+	}
+	.receiveContainer {
+		ul{
+			display: flex;
+			li{
+				flex: 0 0 33.3333%;
+    			max-width: 33.3333%;
+				padding-right: 20px;
+    			padding-left: 20px;
+			}
+		}
+	}
+	.footer__main-content {
+		text-align: center;
+	}
+}
+@media (min-width: 992px){
+	.container {
+    	max-width: 960px;
+	}
+	.quote{
+		p{
+			max-width: 750px;
+		}
+	}
+	.blog-card{
+		flex: 0 0 33.3333%;
+		max-width: 33.3333%;
+		padding-left: 20px;
+		padding-right: 20px;
+		img{
+			height: 157px;
+		}
+		&:first-of-type{
+			padding-left: 0;
+		}
+		&:last-of-type{
+			padding-right: 0;
+		}
+	}
+	.necessityContainerItem{
+		flex: 0 0 25%;
+    	max-width: 25%;
+	}
+	.opportunitiesContainer{
+		img{
+			width: 360px;
+			height: 663px;
+		}
+	}
+	.discover{
+		img{
+			width: 360px;
+			height: 540px;
+		}
+	}
+	.contactsContainerPrices{
+		display: flex;
+		.price-card{
+			margin: 0 8px;
+		}
+	}
+}
+@media (min-width: 1260px){
+	.container{
+    	max-width: 1200px;
 	}
 }
