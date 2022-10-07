@@ -27,6 +27,7 @@ html,body{
 	font-size: 14px;
 	font-size: 18px;
 	width: 100%;
+	height: 100%;
     line-height: 1.6;
 	-ms-text-size-adjust: 100%;
 	-moz-text-size-adjust: 100%;
@@ -57,6 +58,7 @@ h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight: 400;}
 	padding: 0 30px;
 	margin: 0 auto;
 	width: 100%;
+	max-width: 1200px;
 }
 h1{
 	font-size: 30px;
@@ -125,6 +127,46 @@ select{
 .mb4{
 	margin-bottom: 1.5rem!important;
 }
+
+
+.scroll-top-btn {
+    position: fixed;
+    bottom: 0px;
+    left: 0px;
+    z-index: 101;
+    border: none;
+    cursor: pointer;
+    background-color: rgb(242, 168, 115);
+    transition: .3s;
+    transform: translate(-100%, 0px);
+	width: 60px;
+    height: 60px;
+	.scroll-top-btn__icon {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		width: 0px;
+		height: 0px;
+		border-style: solid;
+		border-width: 0px 10px 15px;
+		border-color: transparent transparent rgb(255, 255, 255);
+		font-style: normal;
+		font-weight: 400;
+		font-variant: normal;
+		text-transform: none;
+		line-height: 1;
+		-webkit-font-smoothing: antialiased;
+		font-family: icomoon !important;
+	}
+}
+
+.scroll-top-btn.-show {
+    transform: translate(0px, 0px);
+	transition: .3s;
+}
+
+
 
 .btn{
 	font-weight: 600;
@@ -199,9 +241,25 @@ select{
     color: #fff;
 }
 
+body{
+	&::-webkit-scrollbar{
+		width: 10px;
+		height: 10px;
+	}
+	&::-webkit-scrollbar-thumb{
+		border-radius: 0;
+		background-color: #f2a873;
+		background-repeat: no-repeat;
+		background-position: center;
+	}
+	&::-webkit-scrollbar-track{
+		background-color: #222831;
+	}
+}
+
 
 .header {
-	width: 100%;
+	max-width: 100vw;
 	position: fixed;
     top: 0;
     left: 0;
@@ -211,12 +269,35 @@ select{
     background-color: transparent;
     transition: background-color 0.3s,padding 0.3s,box-shadow 0.3s;
     padding: 15px 0;
+	.headerIcon{
+		display: none;
+		margin: 0 30px 0 0;
+		color: #222831;
+		text-decoration: none;
+		background-color: transparent;
+		transition: .3s;
+		font-family: "icomoon" !important;
+		font-style: normal;
+		font-weight: 400;
+		font-variant: normal;
+		text-transform: none;
+		line-height: 1;
+		-webkit-font-smoothing: antialiased;
+		&:hover {
+			color: #f2a873;
+			text-decoration: none;
+		}
+		i{
+			&::before{
+				content: "";
+			}
+		}
+	}
 	&Container{
 		display: flex;
-		justify-content: space-between;
 		align-items: center;
 		max-width: none;
-		a{
+		.headerContainerBurgerMenu{
 			width: 24px;
 			height: 24px;
 			position: relative;
@@ -244,8 +325,7 @@ select{
 			}
 		}
 		button{
-			background-color: #f2a873;
-			color: #fff;
+			margin-left: auto;
 		}
 	}
 	.header__content-left-side {
@@ -302,6 +382,10 @@ select{
     background-color: #fff;
     padding: 15px 0;
     box-shadow: 0 0 10px rgb(0 0 0 / 10%);
+	.btn{
+		background-color: rgb(242, 168, 115);
+    	color: rgb(255, 255, 255);
+	}
 }
 
 .header.-active {
@@ -322,7 +406,15 @@ select{
 		h1{
 			margin-bottom: 120px;
 		}
-		
+		.startContainerBtnBlock{
+			display: flex;
+			flex-direction: column;
+			min-height: 150px;
+			a{
+				display: inline-block;
+				max-width: 310px;
+			}
+		}
 	}
 	img{
 		display: none;
@@ -454,6 +546,7 @@ select{
 
 
 .necessity {
+	margin-bottom: 160px;
 	&Container{
 		h2{
 			margin-bottom: 80px;
@@ -466,7 +559,12 @@ select{
 	}
 }
 
+.black-bg h5 {
+    color: rgba(255, 255, 255, 0.4);
+}
+
 .opportunities{
+	margin-bottom: 180px;
 	&Container{
 		ul{
 			max-width: 650px;
@@ -518,6 +616,10 @@ select{
 .recomendations{
 	padding-top: 160px;
 	padding-bottom: 140px;
+	h5{
+		margin-top: 80px;
+		margin-bottom: 120px;
+	}
 	&Container{
 		&Item{
 			text-align: center;
@@ -690,6 +792,80 @@ select{
 		}
 	}
 }
+.video-thumbnail {
+    padding-bottom: 75.0378%;
+    position: relative;
+    cursor: pointer;
+    background-color: rgb(0, 0, 0);
+    overflow: hidden;
+	.video-thumbnail__media.-bg-image {
+		background-size: cover;
+		background-position: center center;
+		background-repeat: no-repeat;
+	}
+	.video-thumbnail__media {
+		position: absolute;
+		right: 0px;
+		left: 0px;
+		width: 100%;
+		height: 100%;
+		z-index: 1;
+		border: none;
+	}
+	.video-thumbnail__overlay {
+		position: absolute;
+		inset: 0px;
+		width: 100%;
+		padding: 30px 25px 100px;
+		z-index: 5;
+		display: flex;
+	}
+	.video-thumbnail__overlay-title {
+		margin-bottom: 0px;
+		color: rgb(255, 255, 255) ;
+	}
+	.video-thumbnail__media.-bg-image:hover .video-thumbnail__icon {
+		transform: scale(1.2);
+		background-color: rgba(255, 255, 255, 0.1);
+	}
+	.video-thumbnail__icon {
+		position: absolute;
+		bottom: 25px;
+		right: 30px;
+	}
+	.video-icon {
+		width: 60px;
+		height: 60px;
+		position: absolute;
+		display: block;
+		border: 2px solid rgb(255, 255, 255);
+		border-radius: 50%;
+		transition: transform 0.5s ease 0s, background-color 0.5s ease 0s;
+		background-color: transparent;
+		flex-shrink: 0;
+		font-style: normal;
+		font-weight: 400;
+		font-variant: normal;
+		text-transform: none;
+		line-height: 1;
+		-webkit-font-smoothing: antialiased;
+		font-family: "icomoon";
+		&::after {
+			width: 0px;
+			height: 0px;
+			border-style: solid;
+			border-width: 9.5px 0px 9.5px 15px;
+			border-color: transparent transparent transparent rgb(255, 255, 255);
+			content: "";
+			display: inline-block;
+			position: absolute;
+			top: 50%;
+			left: 54%;
+			transform: translate(-50%, -50%);
+		}
+	}
+}
+
 
 .footer {
     background-color: #171b21;
@@ -771,6 +947,21 @@ select{
 			margin-bottom: 20px;
 			color: #fff;
 		}
+	}
+	.payment-methods-list {
+		display: inline-flex;
+		flex-wrap: wrap;
+		.payment-methods-list__item {
+			height: 20px;
+			width: 45px;
+			margin: 5px 10px;
+		}
+	}
+}
+
+.info{
+	.containerFluid{
+		padding: 0;
 	}
 }
 
@@ -875,7 +1066,58 @@ select{
 	}
 }
 
+.main-nav-list {
+    list-style-type: none;
+    font-size: 18px;
+    font-family: "Source Sans Pro","Roboto",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+	.main-nav-list__item:not(:last-child) {
+		margin-bottom: 0;
+		margin-right: 30px;
+	}
+}
+
+#menu-main-menu{
+	display: none;
+}
+
 @media screen and (min-width: 768px) {
+	.recomendations {
+		margin-top: 180px;
+	}
+	.receive{
+		padding-top: 250px;
+	}
+	.video-thumbnail {
+		transform: translate(-42%,70px);
+		width: 450px;
+    	float: right;
+	}
+	.video-thumbnail__icon {
+		position: relative;
+		bottom: auto;
+		right: auto;
+	}
+	.infoInner{
+		justify-content: flex-end
+	}
+	.video-thumbnail .video-thumbnail__overlay{
+		align-items: flex-end;
+		padding: 30px 25px 30px;
+	}
+	.headerContainer .headerContainerBurgerMenu{
+		display: none;
+	}
+	.header .headerIcon{
+		display: inline-block;
+		i{
+			font-style: normal;
+		}
+	}
+	#menu-main-menu {
+		display: flex;
+		align-items: center;
+		flex-wrap: wrap;
+	}
 	.container{
 		max-width: 720px;
 	}
@@ -895,7 +1137,7 @@ select{
 				max-width: 50%;
 				margin-right: 50px;
 			}
-			
+
 		}
 		img{
 			display: block;
@@ -936,9 +1178,6 @@ select{
 				}
 			}
 		}
-	}
-	.necessityContainer{
-		max-width: none !important;
 	}
 	.necessityContainerItem{
 		flex: 0 0 33.3333%;
@@ -985,11 +1224,16 @@ select{
 		&Item{
 			padding-right: 20px;
     		padding-left: 20px;
+			flex: 0 0 33.3333%;
+    		max-width: 33.3333%;
 		}
 	}
+	
 	.info{
-		display: flex;
 		background-color: #171b21;
+		&Container{
+			display: flex;
+		}
 		&Inner{
 			display: flex;
 			flex-direction: column-reverse;
@@ -1025,7 +1269,19 @@ select{
 		text-align: center;
 	}
 }
+
 @media (min-width: 992px){
+	.aboutContainerSecond{
+		flex: 0 0 83.3333%;
+		max-width: 83.3333%;
+		width: 100%;
+		padding-right: 20px;
+		padding-left: 20px;
+		margin: 0 auto;
+	}
+	.imageDecorationInner{
+		max-width: none;
+	}
 	.container {
     	max-width: 960px;
 	}
@@ -1033,6 +1289,9 @@ select{
 		p{
 			max-width: 750px;
 		}
+	}
+	.video-thumbnail{
+		width: 550px;
 	}
 	.blog-card{
 		flex: 0 0 33.3333%;
@@ -1071,9 +1330,40 @@ select{
 			margin: 0 8px;
 		}
 	}
+	.infoInner{
+		max-width: 560px;
+		margin-right: 8.33333%;
+	}
 }
 @media (min-width: 1260px){
 	.container{
     	max-width: 1200px;
+	}
+	.footer__main-content {
+		text-align: left;
+	}
+	.quote p{
+		margin-right: 85px;
+		margin-left: auto;
+		text-align: end;
+	}
+	.aboutMethod .mdFlex {
+		margin-top: 100px;
+		img{
+			width: 500px;
+			height: 600px;
+		}
+	}
+	.opportunities {
+		img{
+			width: 460px;
+			height: 847px;
+		}
+	}
+	.discover{
+		img{
+			width: 460px;
+			height: 690px;
+		}
 	}
 }
