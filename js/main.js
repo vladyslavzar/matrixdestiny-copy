@@ -48,10 +48,10 @@ let renderedChild = [];
 aboutForms.forEach((item, i) => {
   item.querySelectorAll("input").forEach(elem => {
     elem.addEventListener('focus', () => {
-      downloadJSAtOnload("diagram");
+      if (renderedChild.includes(i)) return;
+      downloadJSAtOnload(`diagram${i}`);
       const hiddenElement = document.createElement("div");
       hiddenElement.className = "diagram hidden"
-      if (renderedChild.includes(i)) return;
       item.appendChild(hiddenElement);
       renderedChild.push(i);
     })
