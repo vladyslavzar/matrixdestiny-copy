@@ -66,10 +66,7 @@ const init = () => {
       item.querySelectorAll("input").forEach(elem => {
         elem.addEventListener('focus', () => {
           if (renderedChild) return;
-          let baseUrl = window.location.pathname;
-          if (baseUrl.includes('.html')){
-            baseUrl = ''
-          }
+          const baseUrl = window.location.pathname;
           downloadJSAtOnload(`https://code.jquery.com/jquery-3.6.1.min.js`);
           downloadJSAtOnload(`https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js`);
           downloadJSAtOnload(`https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js`);
