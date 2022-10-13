@@ -20,6 +20,7 @@ const init = () => {
   const anchorScroll = () => {
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       anchor.addEventListener('click', function (e) {
+        if(anchor.className.includes('js-save-diagram-in-pdf')) return;
           e.preventDefault();
           document.querySelector(this.getAttribute('href')).scrollIntoView({
               behavior: 'smooth'
@@ -71,6 +72,9 @@ const init = () => {
           downloadJSAtOnload(`https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js`);
           downloadJSAtOnload(`https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js`);
           downloadJSAtOnload(`https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.2/js/bootstrap.min.js`);
+          downloadJSAtOnload(`https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.min.js`);
+          downloadJSAtOnload(`https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.6/pdfmake.min.js`);
+          downloadJSAtOnload(`https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.6/vfs_fonts.min.js`);
           downloadJSAtOnload(`${baseUrl}/js/diagram.js`);
           downloadCssAtOnload(`${baseUrl}/css/diagram.css`);
           downloadCssAtOnload(`https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css`);
