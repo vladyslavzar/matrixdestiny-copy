@@ -576,27 +576,6 @@ function initCalculation() {
         initPopovers()
     }
 
-    function loadScript(src) {
-        var themePath = $('body').attr('data-theme-path'),
-            script = document.createElement('script');
-        script.src = themePath + src;
-        script.async = !1;
-        var el = document.querySelector('.js-wrap-for-sticky');
-        if (el.parentNode) {
-            el.parentNode.insertBefore(script, el.nextSibling)
-        }
-    }
-
-    function loadAdditionalScripts() {
-        if (!$('body').get(0).editorScriptsInit) {
-            $('body').get(0).editorScriptsInit = !0;
-            loadScript("/js/editor.header.js");
-            loadScript("/js/editor.core.js");
-            loadScript("/js/pdfmake.min.js");
-            loadScript("/js/vfs_fonts.js")
-        }
-    }
-
     function getHeaderTitlesForCalculation(typeOfForm, language, name, dob, dob2) {
         var headerTitles = {
             title: '',
