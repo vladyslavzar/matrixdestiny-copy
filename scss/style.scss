@@ -1,11 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap');
-@font-face {
-	font-family: 'icomoon';
-	src:url('../fonts/icomoon.eot');
-	src:url('../fonts/icomoon.ttf') format('truetype');
-	font-weight: normal;
-	font-style: normal;
-	}
+
 *{
 	padding: 0;
 	margin: 0;
@@ -51,6 +45,10 @@ h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight: 400;}
     display:none;
 }
 
+img{
+	min-height: 1px;
+}
+
 .container {
 	max-width: 1200px;
 	padding: 0 30px;
@@ -78,25 +76,30 @@ h2{
     line-height: 1.4;
     color: inherit;
 }
-h5{
+h5, .h5{
     font-size: 20px;
 	margin-bottom: 20px;
     font-weight: 600;
+	margin-top: 0;
 }
 
-h6{
+h6, .h6{
     font-family: inherit;
     margin-bottom: 5px;
     font-weight: 400;
     color: #000;
 }
 
-p{
+p, .p{
 	display: block;
     margin-block-start: 1em;
     margin-block-end: 1em;
     margin-inline-start: 0px;
     margin-inline-end: 0px;
+}
+
+p[href] {
+	cursor: pointer;
 }
 
 a{color: #222831;}
@@ -264,7 +267,14 @@ body{
 		background-color: #222831;
 	}
 }
-
+@font-face {
+	font-family: 'icomoon';
+	src:url('../fonts/icomoon.eot');
+	src:url('../fonts/icomoon.ttf') format('truetype');
+	font-weight: normal;
+	font-style: normal;
+	font-display: swap;
+	}
 
 .header {
 	max-width: 100vw;
@@ -518,6 +528,7 @@ h5.mt-4{
 		img{
 			width: 100%;
 			margin: 80px 0;
+			height: 447.7611px;
 		}
 	}
 }
@@ -608,7 +619,9 @@ h5.mt-4{
 .black-bg h5 {
     color: rgba(255, 255, 255, 0.4);
 }
-
+img.black-bg {
+	height: 514px;
+}
 .opportunities{
 	margin-bottom: 180px;
 	&Container{
@@ -641,6 +654,9 @@ h5.mt-4{
 				}
 			}
 		}
+		img{
+			height: 555px;
+		}
 	}
 }
 
@@ -656,6 +672,7 @@ h5.mt-4{
 	img{
 		margin: 80px 0;
 		margin-bottom: 160px;
+		height: 447px;
 	}
 }
 
@@ -722,7 +739,7 @@ h5.mt-4{
 .receive{
 	&Container{
 		text-align: center;
-		h5{
+		.h5{
 			margin-bottom: 80px;
 			color: rgba(255,255,255,.4);
 		}
@@ -769,12 +786,12 @@ h5.mt-4{
 .contacts{
 	&Container{
 		text-align: center;
-		p{
+		.p{
 			padding-bottom: 100px;
 			border-bottom: 1px solid #c4c4c4;
 			margin-bottom: 100px;
 		}
-		h4{
+		.h4{
 			text-align: center;
 			color: rgba(0,0,0,.3);
 			line-height: 1.2;
@@ -916,7 +933,7 @@ h5.mt-4{
 .footer {
     background-color: #171b21;
     padding: 45px 0 70px;
-	h6{
+	.h6{
 		font-family: inherit;
 		margin-bottom: 5px;
 		font-weight: 400;
@@ -1001,6 +1018,10 @@ h5.mt-4{
 			height: 20px;
 			width: 45px;
 			margin: 5px 10px;
+			img{
+				height: 20px;
+				width: 45px;
+			}
 		}
 	}
 }
@@ -1079,6 +1100,9 @@ h5.mt-4{
 			max-width: 540px;
 			padding: 0 30px;
 			margin: 0 auto;
+			img{
+				height: 612px;
+			}
 		}
 	}
 	.whiteSpace{
@@ -1231,6 +1255,7 @@ h5.mt-4{
 				width: 260px;
 				object-fit: contain;
 				margin: 0 20px;
+				height: 448px;
 			}
 			div{
 				width: 100%;
@@ -1334,8 +1359,18 @@ h5.mt-4{
 .aboutContainerSecond{
 	padding: 0 20px;
 }
-
-
+.blog-card__img{
+	img{
+		height: 169px;
+	}
+}
+@media (min-width: 400px){
+	.blog {
+		img{
+			height: auto;
+		}
+	}
+}
 
 @media (min-width: 992px){
 	.aboutContainerSecond{

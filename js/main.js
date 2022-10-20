@@ -21,7 +21,7 @@ const init = () => {
   ifStartedScrolling();
 
   const anchorScroll = () => {
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    document.querySelectorAll('p[href^="#"]').forEach(anchor => {
       anchor.addEventListener('click', function (e) {
         if(anchor.className.includes('js-save-diagram-in-pdf')) return;
           e.preventDefault();
