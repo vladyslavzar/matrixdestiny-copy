@@ -1004,7 +1004,7 @@ const loadResult = () => {
 
 
             if (renderedChild) return;
-            const baseUrl = '';
+            const baseUrl = window.location.pathname;
         
             downloadJSAtOnload(`${baseUrl}/js/diagram.js`);
             downloadCssAtOnload(`${baseUrl}/css/diagram.css`);

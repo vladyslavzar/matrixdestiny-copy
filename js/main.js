@@ -20,7 +20,7 @@ const init = () => {
   }
 
   const formsContentRender = () => {
-    const baseUrl = '';
+    const baseUrl = window.location.pathname;
 
     downloadJSAtOnload(`${baseUrl}/js/loadCalculation.js`)
   }
