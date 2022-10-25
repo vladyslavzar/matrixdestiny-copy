@@ -1,54 +1,52 @@
 
 function initAccordionScroll() {
-    $('body').on('click', '.js-calculation-accordion .js-accordion-item.-with-collapse .accordion__btn', function() {
-        var accordionBtn = $(this);
-        $(this).closest('.js-accordion-item').find('.collapse').toggleClass('show')
-        console.log($(this).closest('.js-accordion-item').find('.collapse'))
-        setTimeout(function() {
-            $('html, body').animate({
-                scrollTop: accordionBtn.closest('.js-accordion-item').offset().top - 100
-                
-            }, 300)
-        }, 100)
+    document.querySelector('body').addEventListener('click', function(e) {
+        if (!e.target.classList.contains('js-calculation-accordion') && !e.target.classList.contains('js-accordion-item.-with-collapse') && !e.target.classList.contains('accordion__btn')) {
+            return
+        }
+        e.target.closest('.js-accordion-item').querySelector('.collapse').classList.toggle('show')
     })
-    $('.js-calculation-accordion').on('hidden.bs.collapse', function() {
-        $(this).find('.js-second-level-accordion .collapse').collapse('hide')
+    document.querySelector('.js-calculation-accordion').addEventListener('hidden.bs.collapse', function() {
+        e.querySelector('.js-second-level-accordion.collapse').collapse('hide')
     })
 }
 
 function initCalculation() {
     initAccordionScroll();
     function initPopovers() {
-        function calculationAccordionPopover() {
-            var calculationAccordionPopoverSelector = $('.js-calculation-accordion [data-toggle="popover"]'),
-                hideTimeout;
-            calculationAccordionPopoverSelector.popover({
-                trigger: 'hover | focus',
-                placement: 'right',
-                offset: '0, -100% + 50px'
-            });
-            calculationAccordionPopoverSelector.on('shown.bs.popover', function(e) {
-                clearTimeout(hideTimeout);
-                hideTimeout = setTimeout(function() {
-                    $(e.target).popover('hide')
-                }, 2000)
-            })
-        }
-        calculationAccordionPopover();
-        $('.js-popover').popover({
-            trigger: 'hover | focus',
-            placement: 'right',
-            offset: '0, 20px'
-        })
+        // function calculationAccordionPopover() {
+        //     var calculationAccordionPopoverSelector = document.querySelector('.js-calculation-accordion [data-toggle="popover"]'),
+        //         hideTimeout;
+        //     var popover = new bootstrap.Popover(calculationAccordionPopoverSelector, {
+        //         trigger: 'hover | focus',
+        //         placement: 'right',
+        //         offset: '0, -100% + 50px'
+        //     })
+        //     calculationAccordionPopoverSelector.addEventListener('shown.bs.popover', function(e) {
+        //         clearTimeout(hideTimeout);
+        //         hideTimeout = setTimeout(function() {
+        //             document.querySelector(e.target).popover('hide')
+        //         }, 2000)
+        //     })
+        // }
+        // calculationAccordionPopover();
+        // document.querySelector('.js-popover').popover({
+        //     trigger: 'hover | focus',
+        //     placement: 'right',
+        //     offset: '0, 20px'
+        // })
     }
     
     
     function initForecastSlider(calculationWrap) {
+
         var initialSlide = 0,
-            forecastYearsSlider = calculationWrap.find('.js-slider-forecast-years'),
-            forecastTextSlider = calculationWrap.find('.js-slider-forecast-text');
-        forecastYearsSlider.find('.forecast-years-item').each(function(index) {
-            if ($(this).hasClass('-active')) {
+            forecastYearsSlider = calculationWrap.querySelector('.js-slider-forecast-years'),
+            forecastTextSlider = calculationWrap.querySelector('.js-slider-forecast-text');
+        return;
+
+        forecastYearsSlider.querySelectorAll('.forecast-years-item').forEach(function(e, index) {
+            if (e.classList.contains('-active')) {
                 initialSlide = index
             }
         });
@@ -85,29 +83,26 @@ function initCalculation() {
         }
     }
 
-    var API_CHECKDATE = 'https://api.matritsa-sudbi.ru/api/v2/calculate/',
-        API_COMPATIBILITY = 'https://api.matritsa-sudbi.ru/api/v2/compat?',
-        API_CHILDREN = 'https://api.matritsa-sudbi.ru/api/v2/children/calculate/';
 
     function detectNotFullFunctionality() {
-        var formWithCalculation = $('.js-form-with-calculation');
+        var formWithCalculation = document.querySelectorAll('.js-form-with-calculation');
         if (!formWithCalculation.length) return;
-        formWithCalculation.each(function() {
-            if ($(this).hasClass('js-not-full-functionality')) {
-                $(this).get(0).notFullFunctionality = !0
+        formWithCalculation.forEach(function(e) {
+            if (e.classList.contains('js-not-full-functionality')) {
+                e[0].notFullFunctionality = !0
             } else {
-                $(this).get(0).notFullFunctionality = !1
+                e[0].notFullFunctionality = !1
             }
         })
     }
     detectNotFullFunctionality();
 
     function showPreloader() {
-        $('.js-preloader').addClass('-show')
+        document.querySelector('.js-preloader').classList.add('-show');
     }
 
     function hidePreloader() {
-        $('.js-preloader').removeClass('-show')
+        document.querySelector('.js-preloader').classList.remove('-show')
     }
 
     function getSortedForecast(data) {
@@ -149,13 +144,13 @@ function initCalculation() {
     function detectTypeOfForm(form) {
         var typeOfForm = "";
         switch (!0) {
-            case (form.hasClass('js-check-date-form')):
+            case (form.classList.contains('js-check-date-form')):
                 typeOfForm = "check-date";
                 break;
-            case (form.hasClass('js-compatibility-form')):
+            case (form.classList.contains('js-compatibility-form')):
                 typeOfForm = "compatibility";
                 break;
-            case (form.hasClass('js-childrens-matrix-form')):
+            case (form.classList.contains('js-childrens-matrix-form')):
                 typeOfForm = "childrens-matrix";
                 break
         }
@@ -238,59 +233,41 @@ function initCalculation() {
     }
 
     function scrollToBeginOfCalculation(calculationWrap) {
-        var calculationAnchorSection = calculationWrap.closest('.js-anchor-section'),
+        var calculationAnchorSection = calculationWrap.querySelector('.js-anchor-section'),
             additionalOffset = 0;
-        if ($('.blog-article').length) {
+        if (document.querySelectorAll('.blog-article').length) {
             additionalOffset = 50
         }
-        $('body, html').animate({
-            scrollTop: calculationAnchorSection.offset().top + additionalOffset
-        }, 500)
+        // $('body, html').animate({
+        //     scrollTop: calculationAnchorSection.offsetTop + additionalOffset
+        // }, 500)
     }
 
     function beginCalculationFromTheBeginning(calculationWrap) {
-        calculationWrap.find('.js-calculation-begin').removeClass('d-none');
-        calculationWrap.find('.js-calculation-block').addClass('d-none');
-        calculationWrap.find('.js-editor-block').addClass('d-none');
-        calculationWrap.find('.js-accordion-buttons').removeClass('d-none');
-        calculationWrap.find('.js-calculation-accordion').removeClass('d-none');
-        calculationWrap.find('.js-calculation-accordion').empty();
-        calculationWrap.find('.js-editor').empty();
+        calculationWrap.querySelector('.js-calculation-begin').classList.remove('d-none');
+        calculationWrap.querySelector('.js-calculation-block').classList.add('d-none');
+        calculationWrap.querySelector('.js-editor-block').classList.add('d-none');
+        calculationWrap.querySelector('.js-accordion-buttons').classList.remove('d-none');
+        calculationWrap.querySelector('.js-calculation-accordion').classList.remove('d-none');
+        calculationWrap.removeChild(calculationWrap.querySelector('.js-calculation-accordion'));
         setTimeout(function() {
-            calculationWrap.find('.js-form-with-calculation').attr('data-click', 'false')
+            calculationWrap.querySelector('.js-form-with-calculation').dataset.click='false';
         }, 3000);
         setTimeout(function() {
-            if ($('.section-about').length) {
-                $('body, html').animate({
-                    scrollTop: calculationWrap.closest('.section').find('.js-anchor-title').offset().top
+            if (document.querySelectorAll('.section-about').length) {
+                document.querySelector('body, html').animate({
+                    scrollTop: calculationWrap.closest('.section').querySelector('.js-anchor-title').offsetTop
                 }, 500)
-            } else if ($('.blog-article').length || $('.section-woocommerce-main-content').length) {
+            } else if (document.querySelectorAll('.blog-article').length || document.querySelectorAll('.section-woocommerce-main-content').length) {
                 scrollToBeginOfCalculation(calculationWrap)
             }
         }, 100)
     }
 
-    function showEditBlock(calculationWrap) {
-        showPreloader();
-        setTimeout(function() {
-            calculationWrap.find('.js-editor-block').removeClass('d-none');
-            calculationWrap.find('.js-calculation-accordion').addClass('d-none');
-            calculationWrap.find('.js-accordion-buttons').addClass('d-none');
-            calculationWrap.find('.js-editor-inner').scrollTop(0);
-            setTimeout(function() {
-                calculationWrap.find('.js-form-with-calculation').attr('data-click', 'false')
-            }, 3000);
-            scrollToBeginOfCalculation(calculationWrap)
-        }, 1000);
-        setTimeout(function() {
-            hidePreloader()
-        }, 2000)
-    }
-
     function resetForm(form) {
-        form.find('input[type="text"]').val('');
-        form.find('select').each(function(number, item) {
-            $(item).find('option').first().prop('selected', !0)
+        form.querySelector('input[type="text"]').value = '';
+        form.querySelectorAll('select').forEach(function(e) {
+            e.querySelectorAll('option')[0].selected=true;
         })
     }
 
@@ -365,7 +342,7 @@ function initCalculation() {
     }
 
     function createForecastSlider(forecastArray, currentAge, language, calculationForm) {
-        var notFullFunctionality = calculationForm.get(0).notFullFunctionality,
+        var notFullFunctionality = calculationForm[0].notFullFunctionality,
             ageRange = getAgeRange(forecastArray);
         var yearsSlider = '<div class="slider-forecast-years js-slider-forecast-years">',
             textSlider = '<div class="slider-forecast-text js-slider-forecast-text">';
@@ -459,7 +436,9 @@ function initCalculation() {
                 accordionContent += accordionText;
                 accordionContent += '</div>'
             }
-            if (blockType === 'health' && !$.isEmptyObject(articleBlocks[i].additional)) {
+            let isMty = articleBlocks[i].additiona && Object.keys(articleBlocks[i].additiona).length === 0 && Object.getPrototypeOf(articleBlocks[i].additiona) === Object.prototype
+
+            if (blockType === 'health' && !isMty) {
                 var accordionTextPersonalRecommendationsOriginal = articleBlocks[i].additional.personalRecommendations,
                     accordionTextPersonalRecommendations = textToHtml(accordionTextPersonalRecommendationsOriginal),
                     personalRecommendationsTitle = '';
@@ -490,7 +469,7 @@ function initCalculation() {
             bodyObject = articleObject.blocks,
             blockType = articleObject.blockType,
             positions = articleObject.positions === undefined ? null : articleObject.positions,
-            itemIsLock = calculationForm.length && calculationForm.get(0).notFullFunctionality && !articleObject.trialAccess,
+            itemIsLock = calculationForm.length && calculationForm[0].notFullFunctionality && !articleObject.trialAccess,
             emptySectionText = (bodyObject === null || bodyObject.length === 0),
             typeOfForm = detectTypeOfForm(calculationForm);
         if (bodyObject === null || bodyObject.length === 0) return;
@@ -516,7 +495,7 @@ function initCalculation() {
                 accordionItem = buildAccordionItem(title, accordionContent, index, itemIsLock, language, blockType, null, typeOfForm);
                 break;
             default:
-                var resultWithAboveTitle = calculationForm.attr('data-result-type') === 'with-above-title';
+                var resultWithAboveTitle = calculationForm.getAttribute('data-result-type') === 'with-above-title';
                 if (resultWithAboveTitle) {
                     for (var i = 0; i < bodyObject.length; i++) {
                         var titleOfSection = bodyObject[i].title,
@@ -527,7 +506,7 @@ function initCalculation() {
                             if (index === 0 && i === 0) {
                                 itemIsLock = !1
                             } else {
-                                itemIsLock = calculationForm.length && calculationForm.get(0).notFullFunctionality
+                                itemIsLock = calculationForm.length && calculationForm[0].notFullFunctionality
                             }
                         }
                         accordionContent += '<div class="accordion__body-item">';
@@ -564,13 +543,13 @@ function initCalculation() {
 
     function createInfoFromServer(dataJson, calculationWrap, language, currentAge) {
         var sortedForecastArray = getSortedForecast(dataJson.data),
-            calculationAccordion = calculationWrap.find('.js-calculation-accordion'),
-            calculationForm = calculationWrap.find('.js-form-with-calculation'),
+            calculationAccordion = calculationWrap.querySelector('.js-calculation-accordion'),
+            calculationForm = calculationWrap.querySelector('.js-form-with-calculation'),
             typeOfForm = detectTypeOfForm(calculationForm);
-        calculationAccordion.attr('id', typeOfForm + '-accordion');
+        calculationAccordion.id=typeOfForm + '-accordion';
         for (var i = 0; i < dataJson.data.length; i++) {
             var accordionItem = createAccordionItem(dataJson.data[i], i, language, sortedForecastArray, currentAge, calculationForm);
-            calculationAccordion.append(accordionItem);
+            calculationAccordion.insertAdjacentHTML('beforeend', accordionItem);
             if (dataJson.data[i].blockType === 'forecast') initForecastSlider(calculationWrap)
         }
         initPopovers()
@@ -621,8 +600,8 @@ function initCalculation() {
     }
 
     function setHeaderTitleForCalculation(calculationWrap, title, subTitle) {
-        calculationWrap.find('.js-calculation-header-title').text(title);
-        calculationWrap.find('.js-calculation-header-sub-title').text(subTitle)
+        calculationWrap.querySelector('.js-calculation-header-title').innerText=title;
+        calculationWrap.querySelector('.js-calculation-header-sub-title').innerText=subTitle
     }
 
     function convertDataForEditorAndSave(response, age, language) {
@@ -673,7 +652,6 @@ function initCalculation() {
                     }
                     var forecastSubTitle = forecastContent.title,
                         forecastText = forecastContent.text;
-                    console.log('914 text', title, forecastText, forecastSubTitle, fc)
                     setDefaultSubTitleAndText(title, forecastSubTitle, forecastText)
                 })
             } else {
@@ -699,183 +677,99 @@ function initCalculation() {
         return formattedArray
     }
 
-    function initEditor(blocks, holder) {
-        var editor;
-        editor = new EditorJS({
-            holder: holder,
-            inlineToolbar: !1,
-            minHeight: 0,
-            tools: {
-                header: {
-                    class: Header,
-                    config: {
-                        placeholder: 'Header'
-                    }
-                },
-            },
-            data: {
-                blocks: blocks
-            },
-            i18n: {
-                messages: {
-                    ui: {
-                        'blockTunes': {
-                            'toggler': {
-                                'Click to tune': 'Нажмите, чтобы настроить'
-                            },
-                        },
-                        'toolbar': {
-                            'toolbox': {
-                                'Add': 'Добавить'
-                            }
-                        }
-                    },
-                    toolNames: {
-                        'Text': 'Параграф',
-                        'Heading': 'Заголовок'
-                    },
-                    blockTunes: {
-                        'delete': {
-                            'Delete': 'Удалить'
-                        },
-                        'moveUp': {
-                            'Move up': 'Переместить вверх'
-                        },
-                        'moveDown': {
-                            'Move down': 'Переместить вниз'
-                        }
-                    },
-                }
-            },
-            onReady: function() {
-                $('.js-save-from-editor').on('click', function(e) {
-                    e.preventDefault();
-                    var calculationWrap = $(this).closest('.js-calculation-wrap'),
-                        calculationForm = calculationWrap.find('.js-form-with-calculation'),
-                        typeOfDocument = detectTypeOfForm(calculationForm),
-                        language = $(this).attr('data-language-string'),
-                        dob = $(this).attr('data-dob-string'),
-                        dob2, name = '';
-                    if (typeOfDocument === 'check-date' || typeOfDocument === 'childrens-matrix') {
-                        name = $(this).attr('data-name-string')
-                    } else if (typeOfDocument === 'compatibility') {
-                        dob2 = $(this).attr('data-dob-2-string')
-                    }
-                    showPreloader();
-                    setTimeout(function() {
-                        editor.save().then(function(outputData) {
-                            var headerTitles = getHeaderTitlesForCalculation(typeOfDocument, language, name, dob, dob2),
-                                pdfName = headerTitles.subTitle + '.pdf',
-                                blocks = outputData.blocks;
-                            blocks = addHeaderTitlesToConvertedArray(headerTitles, blocks);
-                            createTextPdf(blocks, pdfName);
-                            setTimeout(function() {
-                                hidePreloader()
-                            }, 1000)
-                        }).catch(function(error) {
-                            console.log('Saving failed: ', error)
-                        })
-                    }, 100)
-                })
-            }
-        })
-    }
-
     function fillInTheDiagram(combinations, sectionWithDiagram) {
-        var personalCalculationItems = sectionWithDiagram.find('.js-personal-calculation-item');
-        personalCalculationItems.each(function() {
-            var personalCalculationPosition = $(this).attr('data-personal-calculation-position');
-            $(this).text(combinations[personalCalculationPosition])
+        var personalCalculationItems = sectionWithDiagram.querySelectorAll('.js-personal-calculation-item');
+        personalCalculationItems.forEach(function(e) {
+            var personalCalculationPosition = e.getAttribute('data-personal-calculation-position');
+            e.innerText=combinations[personalCalculationPosition]
         })
     }
 
     function clearActiveArticleInTheSectionWithDiagram(sectionWithDiagram) {
-        sectionWithDiagram.find('.js-personal-calculation-item').removeClass('-active')
+        sectionWithDiagram.querySelector('.js-personal-calculation-item').classList.remove('-active')
     }
 
     function addActiveArticleInTheSectionWithDiagram(sectionWithDiagram) {
-        sectionWithDiagram.find('.js-personal-calculation-item').addClass('-active')
+        sectionWithDiagram.querySelector('.js-personal-calculation-item').classList.add('-active')
     }
 
     function clearActiveRowInTable(sectionWithDiagram) {
-        sectionWithDiagram.find('.js-health-table tbody tr').removeClass('-active')
+        // sectionWithDiagram.querySelector('.js-health-table').classList.remove('-active')
     }
 
     function activeArticleInTheSectionWithDiagram(sectionWithDiagram, calculationWrap) {
-        var calculationAccordion = calculationWrap.find('.js-calculation-accordion');
-        calculationAccordion.on('shown.bs.collapse', function(e) {
+        var calculationAccordion = calculationWrap.querySelector('.js-calculation-accordion');
+        calculationAccordion.addEventListener('shown.bs.collapse', function(e) {
             clearActiveArticleInTheSectionWithDiagram(sectionWithDiagram);
             clearActiveRowInTable(sectionWithDiagram);
-            var activeAccordionItem = $(e.target).closest('.js-accordion-item'),
-                activeAccordionItemName = activeAccordionItem.find('.accordion__btn').text(),
-                activeAccordionItemType = activeAccordionItem.attr('data-block-type'),
-                positionsOfActiveAccordion = activeAccordionItem.attr('data-personal-calculation-positions').replace(/\s/g, "").split(',');
-            if (activeAccordionItem.hasClass('-lock') || positionsOfActiveAccordion[0] === 'null') {
+            var activeAccordionItem = document.querySelector(e.target).closest('.js-accordion-item'),
+                activeAccordionItemName = activeAccordionItem.querySelector('.accordion__btn').text='',
+                activeAccordionItemType = activeAccordionItem.getAttribute('data-block-type'),
+                positionsOfActiveAccordion = activeAccordionItem.getAttribute('data-personal-calculation-positions').replace(/\s/g, "").split(',');
+            if (activeAccordionItem.classList.contains('-lock') || positionsOfActiveAccordion[0] === 'null') {
                 addActiveArticleInTheSectionWithDiagram(sectionWithDiagram);
                 return
             }
             for (var i = 0; i < positionsOfActiveAccordion.length; i++) {
                 var position = positionsOfActiveAccordion[i],
-                    targetItem = sectionWithDiagram.find('.js-personal-calculation-item[data-personal-calculation-position="' + position + '"]'),
+                    targetItem = sectionWithDiagram.querySelector('.js-personal-calculation-item[data-personal-calculation-position="' + position + '"]'),
                     targetItemInTable = targetItem.closest('.js-health-table').length ? !0 : !1;
-                targetItem.addClass('-active');
+                targetItem.classList.add('-active');
                 if (targetItemInTable && (activeAccordionItemType === 'health' || activeAccordionItemName === 'Программы' || activeAccordionItemName === 'Programs')) {
-                    targetItem.closest('tr').addClass('-active')
+                    targetItem.closest('tr').classList.add('-active')
                 }
             }
         });
-        calculationAccordion.on('hide.bs.collapse', function(e) {
+        calculationAccordion.addEventListener('hide.bs.collapse', function(e) {
             addActiveArticleInTheSectionWithDiagram(sectionWithDiagram);
             clearActiveRowInTable(sectionWithDiagram)
         })
     }
 
     function cloneDiagramSection(calculationWrap) {
-        var diagram = calculationWrap.find('.js-section-with-diagram'),
-            cloneWrapTarget = calculationWrap.find('.js-print-diagram-wrap');
-        cloneWrapTarget.find('.js-section-with-diagram').remove();
-        diagram.clone().removeClass('.js-personal-calculation-item').appendTo(cloneWrapTarget)
+        // var diagram = calculationWrap.querySelector('.js-section-with-diagram'),
+        //     cloneWrapTarget = calculationWrap.querySelector('.js-print-diagram-wrap');
+        // console.log(calculationWrap, 'cloneDiagramSection(calculationWrap)');
+        // console.log(diagram, 'diagram(calculationWrap)');
+        // console.log(cloneWrapTarget, 'cloneWrapTarget(calculationWrap)');
+        // cloneWrapTarget.querySelector('.js-section-with-diagram').remove();
+        // cloneWrapTarget.append(diagram.clone().classList.remove('.js-personal-calculation-item'))
     }
-    $.validator.addMethod("checkDate", function(value, element) {
-        return value.match(/^(0?[0-9]|[12][0-9]|3[0-1])[/., -](0?[0-9]|1[0-2])[/., -](\d{4})$/)
-    }, "Пожалуйста введите корректную дату.");
-    $('.js-check-date-form').validate({
-        rules: {
-            dob: {
-                checkDate: !0
-            }
-        },
-        submitHandler: function(form) {
-            var form = $(form),
+    // $.validator.addMethod("checkDate", function(value, element) {
+    //     return value.match(/^(0?[0-9]|[12][0-9]|3[0-1])[/., -](0?[0-9]|1[0-2])[/., -](\d{4})$/)
+    // }, "Пожалуйста введите корректную дату.");
+    document.querySelector('.js-check-date-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            var form = e.target,
                 typeOfForm = detectTypeOfForm(form),
                 calculationWrap = form.closest('.js-calculation-wrap'),
-                sectionWithDiagram = calculationWrap.find('.js-section-with-diagram'),
-                saveButton = calculationWrap.find('.js-save-info-in-pdf'),
-                saveFromEditorButton = calculationWrap.find('.js-save-from-editor'),
-                saveDiagramButton = calculationWrap.find('.js-save-diagram-in-pdf'),
-                formName = form.find('#name').val(),
-                formDob = form.find('#dob').val(),
+                sectionWithDiagram = calculationWrap.querySelector('.js-section-with-diagram'),
+                saveButton = calculationWrap.querySelector('.js-save-info-in-pdf'),
+                saveFromEditorButton = calculationWrap.querySelector('.js-save-from-editor'),
+                saveDiagramButton = calculationWrap.querySelector('.js-save-diagram-in-pdf'),
+                formName = form.querySelector('#name').value,
+                formDob = form.querySelector('#dob').value,
                 age = getAgeFromBirthdate(formDob),
-                appeal = form.find('#appeal').val(),
-                gender = form.find('#gender').val(),
-                product_id = +form.find("#product_id").val(),
-                pid = form.find("#pid").val(),
-                language = form.find('#language').val(),
+                appeal = form.querySelector('#appeal').value,
+                gender = form.querySelector('#gender').value,
+                product_id = +form.querySelector("#product_id").value,
+                pid = form.querySelector("#pid").value,
+                language = form.querySelector('#language').value,
                 edw_var = '';
-            if ($('.js-check-date-form').hasClass('js-not-full-functionality')) {
+            if (document.querySelector('.js-check-date-form').classList.contains('js-not-full-functionality')) {
                 edw_var = "&edw=1"
             }
             var queryString = formDob + "?gender=" + gender + "&language=" + language + "&appeal=" + (appeal || 'p') + edw_var;
-            saveButton.attr('data-query-string', queryString);
-            saveButton.attr('data-name-string', formName);
-            saveButton.attr('data-dob-string', formDob);
-            saveButton.attr('data-language-string', language);
-            saveFromEditorButton.attr('data-name-string', formName);
-            saveFromEditorButton.attr('data-dob-string', formDob);
-            saveFromEditorButton.attr('data-language-string', language);
-            saveDiagramButton.attr('data-name-string', formName);
-            saveDiagramButton.attr('data-dob-string', formDob);
-            saveDiagramButton.attr('data-language-string', language);
+            // saveButton.dataset.queryString=(queryString);
+            // saveButton.dataset.nameString=(formName);
+            // saveButton.dataset.dobString=(formDob);
+            // saveButton.dataset.languageString=(language);
+            saveFromEditorButton.dataset.nameString=(formName);
+            saveFromEditorButton.dataset.dobString=(formDob);
+            saveFromEditorButton.dataset.languageString=(language);
+            saveDiagramButton.dataset.nameString=(formName);
+            saveDiagramButton.dataset.dobString=(formDob);
+            saveDiagramButton.dataset.languageString=(language);
             showPreloader();
             const response ={
                 "ok": true,
@@ -2665,18 +2559,14 @@ function initCalculation() {
                     fetch("/wp-json/c/v1/deactivate/" + product_id)
                 }
                 
-                calculationWrap.find('.js-calculation-begin').addClass('d-none');
-                calculationWrap.find('.js-calculation-block').removeClass('d-none');
+                calculationWrap.querySelector('.js-calculation-begin').classList.add('d-none');
+                calculationWrap.querySelector('.js-calculation-block').classList.remove('d-none');
                 setTimeout(function() {
-                    calculationWrap.find('.js-form-with-calculation').attr('data-click', 'false')
+                    calculationWrap.querySelector('.js-form-with-calculation').dataset.click='false'
                 }, 3000);
                 var headerTitles = getHeaderTitlesForCalculation(typeOfForm, language, formName, formDob, 0);
                 setHeaderTitleForCalculation(calculationWrap, headerTitles.title, headerTitles.subTitle);
                 createInfoFromServer(response, calculationWrap, language, age);
-                setTimeout(function() {
-                    var blocks = convertDataForEditorAndSave(response, age, language);
-                    initEditor(blocks, 'js-calculation-editor')
-                }, 1000)
                 addActiveArticleInTheSectionWithDiagram(sectionWithDiagram);
                 clearActiveRowInTable(sectionWithDiagram);
                 fillInTheDiagram(response.combinations, sectionWithDiagram);
@@ -2688,32 +2578,26 @@ function initCalculation() {
                 }, 1000)
 
         }
-    });
+    )
     
 
-    $('.js-childrens-matrix-form').validate({
-        rules: {
-            "child-dob": {
-                checkDate: !0
-            }
-        },
-        submitHandler: function(form) {
-            
-            var form = $(form),
+    document.querySelector('.js-childrens-matrix-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            var form = e.target,
                 typeOfForm = detectTypeOfForm(form),
                 calculationWrap = form.closest('.js-calculation-wrap'),
-                sectionWithDiagram = calculationWrap.find('.js-section-with-diagram'),
-                saveButton = calculationWrap.find('.js-save-info-in-pdf'),
-                saveFromEditorButton = calculationWrap.find('.js-save-from-editor'),
-                saveDiagramButton = calculationWrap.find('.js-save-diagram-in-pdf'),
-                formName = form.find('#child-name').val(),
-                formDob = form.find('#child-dob').val(),
+                sectionWithDiagram = calculationWrap.querySelector('.js-section-with-diagram'),
+                saveButton = calculationWrap.querySelector('.js-save-info-in-pdf'),
+                saveFromEditorButton = calculationWrap.querySelector('.js-save-from-editor'),
+                saveDiagramButton = calculationWrap.querySelector('.js-save-diagram-in-pdf'),
+                formName = form.querySelector('#child-name').value,
+                formDob = form.querySelector('#child-dob').value,
                 age = getAgeFromBirthdate(formDob),
-                product_id = +form.find("#product_id").val(),
-                gender = form.find('#child-gender').val(),
-                language = form.find('#language').val(),
+                product_id = +form.querySelector("#product_id").value,
+                gender = form.querySelector('#child-gender').value,
+                // language = form.querySelector('#language').value,
                 edw_var = '';
-            if ($('.js-check-date-form').hasClass('js-not-full-functionality')) {
+            if (document.querySelector('.js-check-date-form').classList.contains('js-not-full-functionality')) {
                 edw_var = "&edw=1"
             }
             var res = {
@@ -3549,35 +3433,31 @@ function initCalculation() {
                  "z8": 11
                 }
                }
-            var queryString = formDob + "?gender=" + gender + "&language=" + language + edw_var;
-            saveButton.attr('data-query-string', queryString);
-            saveButton.attr('data-name-string', formName);
-            saveButton.attr('data-dob-string', formDob);
-            saveButton.attr('data-language-string', language);
-            saveFromEditorButton.attr('data-name-string', formName);
-            saveFromEditorButton.attr('data-dob-string', formDob);
-            saveFromEditorButton.attr('data-language-string', language);
-            saveDiagramButton.attr('data-name-string', formName);
-            saveDiagramButton.attr('data-dob-string', formDob);
-            saveDiagramButton.attr('data-language-string', language);
+            // var queryString = formDob + "?gender=" + gender + "&language=" + language + edw_var;
+            // // saveButton.dataset.queryString=(queryString);
+            // // saveButton.dataset.nameString=(formName);
+            // // saveButton.dataset.dobString=(formDob);
+            // // saveButton.dataset.languageString=(language);
+            // saveFromEditorButton.dataset.nameString=(formName);
+            // saveFromEditorButton.dataset.dobString=(formDob);
+            // saveFromEditorButton.dataset.languageString=(language);
+            // saveDiagramButton.dataset.nameString=(formName);
+            // saveDiagramButton.dataset.dobString=(formDob);
+            // saveDiagramButton.dataset.languageString=(language);
             showPreloader();
 
             resetForm(form);
             if (product_id) {
                 fetch("/wp-json/c/v1/deactivate/" + product_id)
             }
-            calculationWrap.find('.js-calculation-begin').addClass('d-none');
-            calculationWrap.find('.js-calculation-block').removeClass('d-none');
+            calculationWrap.querySelector('.js-calculation-begin').classList.add('d-none');
+            calculationWrap.querySelector('.js-calculation-block').classList.remove('d-none');
             setTimeout(function() {
-                calculationWrap.find('.js-form-with-calculation').attr('data-click', 'false')
+                calculationWrap.querySelector('.js-form-with-calculation').dataset.click=('false')
             }, 3000);
             var headerTitles = getHeaderTitlesForCalculation(typeOfForm, language, formName, formDob, 0);
             setHeaderTitleForCalculation(calculationWrap, headerTitles.title, headerTitles.subTitle);
             createInfoFromServer(res, calculationWrap, language, age);
-            setTimeout(function() {
-                var blocks = convertDataForEditorAndSave(res, age, language);
-                initEditor(blocks, 'js-childrens-matrix-editor')
-            }, 1000)
             addActiveArticleInTheSectionWithDiagram(sectionWithDiagram);
             clearActiveRowInTable(sectionWithDiagram);
             fillInTheDiagram(res.combinations, sectionWithDiagram);
@@ -3587,7 +3467,7 @@ function initCalculation() {
                 scrollToBeginOfCalculation(calculationWrap);
                 hidePreloader()
             }, 1000)
-}
+
     });
     const response = {
         "ok": true,
@@ -3727,329 +3607,67 @@ function initCalculation() {
         }
        }
 
-    $('.js-compatibility-form').validate({
-        rules: {
-            "dob-compatibility-1": {
-                checkDate: !0
-            },
-            "dob-compatibility-2": {
-                checkDate: !0
-            }
-        },
-
-
-        submitHandler: function(form) {
-            var form = $(form),
-                typeOfForm = detectTypeOfForm(form),
-                calculationWrap = form.closest('.js-calculation-wrap'),
-                sectionWithDiagram = calculationWrap.find('.js-section-with-diagram'),
-                saveButton = calculationWrap.find('.js-save-info-in-pdf'),
-                saveFromEditorButton = calculationWrap.find('.js-save-from-editor'),
-                saveDiagramButton = calculationWrap.find('.js-save-diagram-in-pdf'),
-                formDobOne = form.find('#dob-compatibility-1').val(),
-                product_id = +form.find("#product_id").val(),
-                formDobTwo = form.find('#dob-compatibility-2').val(),
-                language = form.find('#language-compatibility').val(),
-                edw_var = '';
-            if ($('.js-check-date-form').hasClass('js-not-full-functionality')) {
-                edw_var = "&edw=1"
-            }
-            var queryString = "date1=" + formDobOne + "&date2=" + formDobTwo + "&language=" + language + edw_var;
-            saveButton.attr('data-query-string', queryString);
-            saveButton.attr('data-dob-string', formDobOne);
-            saveButton.attr('data-dob-2-string', formDobTwo);
-            saveButton.attr('data-language-string', language);
-            saveFromEditorButton.attr('data-dob-string', formDobOne);
-            saveFromEditorButton.attr('data-dob-2-string', formDobTwo);
-            saveFromEditorButton.attr('data-language-string', language);
-            saveDiagramButton.attr('data-name-string', !1);
-            saveDiagramButton.attr('data-dob-string', formDobOne + " + " + formDobTwo);
-            saveDiagramButton.attr('data-language-string', language);
-            showPreloader();
-
-            resetForm(form);
-            if (product_id) {
-                fetch("/wp-json/c/v1/deactivate/" + product_id)
-            }
-            
-            calculationWrap.find('.js-calculation-begin').addClass('d-none');
-            calculationWrap.find('.js-calculation-block').removeClass('d-none');
-            calculationWrap.find('.js-calculation-block').find('.js-dob-and-dob-2').text(formDobOne + " + " + formDobTwo);
-            setTimeout(function() {
-                calculationWrap.find('.js-form-with-calculation').attr('data-click', 'false')
-            }, 3000);
-            var headerTitles = getHeaderTitlesForCalculation(typeOfForm, language, '', formDobOne, formDobTwo);
-            setHeaderTitleForCalculation(calculationWrap, headerTitles.title, headerTitles.subTitle);
-            createInfoFromServer(response, calculationWrap, language, 0);
-            setTimeout(function() {
-                var blocks = convertDataForEditorAndSave(response, 0, language);
-                initEditor(blocks, 'js-compatibility-editor')
-            }, 1000)
-            addActiveArticleInTheSectionWithDiagram(sectionWithDiagram);
-            clearActiveRowInTable(sectionWithDiagram);
-            fillInTheDiagram(response.combinations, sectionWithDiagram);
-            activeArticleInTheSectionWithDiagram(sectionWithDiagram, calculationWrap);
-            cloneDiagramSection(calculationWrap);
-            setTimeout(function() {
-                scrollToBeginOfCalculation(calculationWrap);
-                hidePreloader()
-            }, 1000)
-                
-
-            
-        }
-    });
-    $('.js-start-from-the-beginning').on('click', function(e) {
+    document.querySelector('.js-compatibility-form').addEventListener('submit', (e) => {
         e.preventDefault();
-        var calculationWrap = $(this).closest('.js-calculation-wrap');
-        beginCalculationFromTheBeginning(calculationWrap)
-    });
-    $('.js-show-editor').on('click', function(e) {
-        e.preventDefault();
-        var calculationWrap = $(this).closest('.js-calculation-wrap');
-        showEditBlock(calculationWrap)
-    });
-
-    function addHeaderTitlesToConvertedArray(headerTitle, blocks) {
-        var convertedArrayWithTitles = blocks,
-            convertedTitle = headerTitle.title,
-            convertedSubTitle = headerTitle.subTitle;
-        convertedArrayWithTitles.unshift({
-            type: 'paragraph',
-            data: {
-                text: ''
-            }
-        });
-        convertedArrayWithTitles.unshift({
-            type: 'paragraph',
-            data: {
-                text: ''
-            }
-        });
-        convertedArrayWithTitles.unshift({
-            type: 'paragraph',
-            data: {
-                text: ''
-            }
-        });
-        convertedArrayWithTitles.unshift({
-            type: 'header',
-            data: {
-                text: convertedSubTitle,
-                level: 6
-            }
-        });
-        convertedArrayWithTitles.unshift({
-            type: 'header',
-            data: {
-                text: convertedTitle,
-                level: 3
-            }
-        });
-        return convertedArrayWithTitles
-    }
-
-    function createTextPdf(data, pdfName) {
-        console.log('Data ->', data)
-        var docInfo = {
-                info: {
-                    title: 'Matrix destiny',
-                    author: 'https://matritsa-sudbi.ru',
-                    subject: 'Calculation',
-                    keywords: 'Matrix destiny'
-                }
-            },
-            styles = {
-                header_1: {
-                    fontSize: 46,
-                    bold: !0,
-                    margin: [0, 0, 0, 30]
-                },
-                header_2: {
-                    fontSize: 36,
-                    bold: !0,
-                    margin: [0, 0, 0, 30]
-                },
-                header_3: {
-                    fontSize: 32,
-                    bold: !0,
-                    margin: [0, 0, 0, 20]
-                },
-                header_4: {
-                    fontSize: 28,
-                    bold: !0,
-                    margin: [0, 0, 0, 20]
-                },
-                header_5: {
-                    fontSize: 24,
-                    bold: !0,
-                    margin: [0, 0, 0, 20]
-                },
-                header_6: {
-                    fontSize: 17,
-                    bold: !0,
-                    margin: [0, 0, 0, 10]
-                },
-                paragraph: {
-                    fontSize: 14,
-                    bold: !1,
-                    margin: [0, 0, 0, 15]
-                },
-            },
-            content = [];
-        for (var i = 0; i < data.length; i++) {
-            var style = data[i].type === 'header' ? 'header_' + data[i].data.level : data[i].type,
-                textItem = {
-                    text: data[i].data.text,
-                    style: style
-                };
-            content.push(textItem)
+        var form = e.target,
+            typeOfForm = detectTypeOfForm(form),
+            calculationWrap = form.closest('.js-calculation-wrap'),
+            sectionWithDiagram = calculationWrap.querySelector('.js-section-with-diagram'),
+            saveButton = calculationWrap.querySelector('.js-save-info-in-pdf'),
+            saveFromEditorButton = calculationWrap.querySelector('.js-save-from-editor'),
+            saveDiagramButton = calculationWrap.querySelector('.js-save-diagram-in-pdf'),
+            formDobOne = form.querySelector('#dob-compatibility-1').value,
+            product_id = +form.querySelector("#product_id").value,
+            formDobTwo = form.querySelector('#dob-compatibility-2').value,
+            language = form.querySelector('#language-compatibility').value,
+            edw_var = '';
+        if (document.querySelector('.js-check-date-form').classList.contains('js-not-full-functionality')) {
+            edw_var = "&edw=1"
         }
-        var futureArticle = {
-            pageSize: 'A4',
-            info: docInfo,
-            content: content,
-            styles: styles
-        };
-        const pdf = pdfMake.createPdf(futureArticle);
-        const pdf_2 = pdfMake.createPdf(futureArticle);
-        let promiseObject = pdf_2.getBase64((base64Data) => {});
-        promiseObject.then(function(result) {
-            $.ajax({
-                type: 'POST',
-                url: '/upload.php',
-                dataType: 'html',
-                data: {
-                    text: result,
-                    name: pdfName,
-                    user: jQuery(".info_js_thank").attr('data-user'),
-                    userid: jQuery(".js-form-with-calculation").attr('data-user-id'),
-                    click: jQuery(".js-form-with-calculation").attr('data-click'),
-                    type: jQuery(".js-form-with-calculation").attr('data-type'),
-                },
-                success: function(data) {
-                    pdf.download(pdfName)
-                }
-            })
-        })
-    }
-
-    function createDiagramPdf(language, dob, name, diagramImage) {
-        var title = '',
-            name = (name === 'false') ? '' : name;
-        if (language === 'ru') {
-            title = 'Диаграмма'
-        } else if (language === 'en') {
-            title = 'Diagram'
-        }
-        var docInfo = {
-            info: {
-                title: title,
-                author: 'https://matritsa-sudbi.ru',
-                subject: title,
-                keywords: 'Матрица судьбы, Расчёт матрицы'
-            }
-        }
-        var styles = {
-            topTitle: {
-                fontSize: 18,
-                bold: !0
-            }
-        }
-        var content = [];
-        var topTitleObj = {
-            text: title + ": " + name + " (" + dob + ")" + "\n\n",
-            style: "topTitle",
-            alignment: 'center'
-        }
-        content.push(topTitleObj);
-        content.push({
-            image: diagramImage,
-            fit: [780, 500],
-            alignment: 'center'
-        })
-        var diagramPdf = {
-            pageSize: 'A4',
-            pageMargins: [20, 20],
-            pageOrientation: 'landscape',
-            content: []
-        };
-        diagramPdf.info = docInfo;
-        diagramPdf.content = content;
-        diagramPdf.styles = styles;
-        pdfMake.createPdf(diagramPdf).download('' + title.toLowerCase() + '.pdf')
-    }
-    $('.js-save-info-in-pdf').on('click', function(e) {
-        e.preventDefault();
-        var calculationWrap = $(this).closest('.js-calculation-wrap'),
-            calculationForm = calculationWrap.find('.js-form-with-calculation'),
-            typeOfDocument = detectTypeOfForm(calculationForm),
-            apiUrl = '',
-            queryString = $(this).attr('data-query-string'),
-            language = $(this).attr('data-language-string'),
-            dob = $(this).attr('data-dob-string'),
-            age = getAgeFromBirthdate(dob),
-            name, currentAge, dob2;
+        var queryString = "date1=" + formDobOne + "&date2=" + formDobTwo + "&language=" + language + edw_var;
+        // saveButton.dataset.queryString=(queryString);
+        // saveButton.dataset.dobString=(formDobOne);
+        // saveButton.dataset.dob2String=(formDobTwo);
+        // saveButton.dataset.languageString=(language);
+        saveFromEditorButton.dataset.dobString=(formDobOne);
+        saveFromEditorButton.dataset.dob2String=(formDobTwo);
+        saveFromEditorButton.dataset.languageString=(language);
+        saveDiagramButton.dataset.nameString=(!1);
+        saveDiagramButton.dataset.dobString=(formDobOne + " + " + formDobTwo);
+        saveDiagramButton.dataset.languageString=(language);
         showPreloader();
-        if (typeOfDocument === 'check-date') {
-            apiUrl = API_CHECKDATE;
-            name = $(this).attr('data-name-string');
-            currentAge = getAgeFromBirthdate(dob)
-        } else if (typeOfDocument === 'compatibility') {
-            apiUrl = API_COMPATIBILITY;
-            dob2 = $(this).attr('data-dob-2-string')
-        } else if (typeOfDocument === 'childrens-matrix') {
-            apiUrl = API_CHILDREN;
-            name = $(this).attr('data-name-string');
-            currentAge = getAgeFromBirthdate(dob)
+
+        resetForm(form);
+        if (product_id) {
+            fetch("/wp-json/c/v1/deactivate/" + product_id)
         }
-        $.ajax({
-            url: apiUrl + queryString,
-            method: 'GET',
-            success: function(response) {
-                var headerTitles = getHeaderTitlesForCalculation(typeOfDocument, language, name, dob, dob2)
-                var pdfName = headerTitles.subTitle + '.pdf'
-                var blocks = convertDataForEditorAndSave(response, age, language);
-                blocks = addHeaderTitlesToConvertedArray(headerTitles, blocks);
-                createTextPdf(blocks, pdfName);
-                setTimeout(function() {
-                    hidePreloader()
-                }, 1000)
-            },
-            error: function() {
-                console.log("some error occurred")
-            },
-        })
-    });
-    $('.js-form-with-calculation input[type="submit"]').on('click', function(e) {
+        
+        calculationWrap.querySelector('.js-calculation-begin').classList.add('d-none');
+        calculationWrap.querySelector('.js-calculation-block').classList.remove('d-none');
+        // calculationWrap.querySelector('.js-calculation-block').querySelector('.js-dob-and-dob-2').innerText=formDobOne + " + " + formDobTwo
         setTimeout(function() {
-            $('.auto_download .js-save-info-in-pdf').click()
-        }, 3000)
+            calculationWrap.querySelector('.js-form-with-calculation').dataset.click=('false')
+        }, 3000);
+        var headerTitles = getHeaderTitlesForCalculation(typeOfForm, language, '', formDobOne, formDobTwo);
+        setHeaderTitleForCalculation(calculationWrap, headerTitles.title, headerTitles.subTitle);
+        createInfoFromServer(response, calculationWrap, language, 0);
+        addActiveArticleInTheSectionWithDiagram(sectionWithDiagram);
+        clearActiveRowInTable(sectionWithDiagram);
+        fillInTheDiagram(response.combinations, sectionWithDiagram);
+        activeArticleInTheSectionWithDiagram(sectionWithDiagram, calculationWrap);
+        cloneDiagramSection(calculationWrap);
+        setTimeout(function() {
+            scrollToBeginOfCalculation(calculationWrap);
+            hidePreloader()
+        }, 1000)
+                
     });
-    $('.js-save-diagram-in-pdf').on('click', function(e) {
-        e.preventDefault();
-        var calculationWrap = $(this).closest('.js-calculation-wrap'),
-            language = $(this).attr('data-language-string'),
-            dob = $(this).attr('data-dob-string'),
-            name = $(this).attr('data-name-string'),
-            printDiagramHtml = calculationWrap.find('.js-print-diagram-wrap .js-section-with-diagram');
-        showPreloader();
-        domtoimage.toJpeg(printDiagramHtml.get(0), {
-            bgcolor: "#ffffff"
-        }).then(function(dataUrl) {
-            createDiagramPdf(language, dob, name, dataUrl);
-            setTimeout(function() {
-                hidePreloader()
-            }, 1000)
-        }).catch(function(error) {
-            console.error('oops, something went wrong!', error)
-        })
-    })
-    
-}
+    // document.querySelector('.js-start-from-the-beginning').addEventListener('click', function(e) {
+    //     e.preventDefault();
+    //     var calculationWrap = e.target.closest('.js-calculation-wrap');
+    //     beginCalculationFromTheBeginning(calculationWrap)
+    // });
 
+}   
 
-
-$(document).ready(function() {
-    initCalculation();
-});
+initCalculation();

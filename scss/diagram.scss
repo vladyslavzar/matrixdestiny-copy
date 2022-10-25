@@ -1171,40 +1171,40 @@ a.bg-dark:hover,a.bg-dark:focus,button.bg-dark:hover,button.bg-dark:focus{
     height:4.572%;
     font-size:2em
 }
-.matrix-diagram__circle.-active{
+.matrix-diagram__circle{
     color:#fff
 }
-.matrix-diagram__circle.-purple.-active{
+.matrix-diagram__circle.-purple.-active,.-purple{
     background-color:#8a46a3;
     border-color:#8a46a3
 }
-.matrix-diagram__circle.-red.-active{
+.matrix-diagram__circle.-red.-active ,.-red{
     background-color:#ef4141;
     border-color:#ef4141
 }
-.matrix-diagram__circle.-yellow.-active{
+.matrix-diagram__circle.-yellow.-active ,.-yellow{
     background-color:#ffed47;
     border-color:#ffed47;
     color:#222831
 }
-.matrix-diagram__circle.-white.-active{
+.matrix-diagram__circle.-white.-active ,.-white{
     background-color:#fff;
     border-color:#222831;
     color:#222831
 }
-.matrix-diagram__circle.-blue.-active{
+.matrix-diagram__circle.-blue.-active ,.-blue{
     background-color:#526dfa;
     border-color:#526dfa
 }
-.matrix-diagram__circle.-cyan.-active{
+.matrix-diagram__circle.-cyan.-active ,.-cyan{
     background-color:#45cfe1;
     border-color:#45cfe1
 }
-.matrix-diagram__circle.-orange.-active{
+.matrix-diagram__circle.-orange.-active ,.-orange{
     background-color:#ffae34;
     border-color:#ffae34
 }
-.matrix-diagram__circle.-green.-active{
+.matrix-diagram__circle.-green.-active ,.-green{
     background-color:#afde61;
     border-color:#afde61
 }
@@ -1623,7 +1623,7 @@ a.bg-dark:hover,a.bg-dark:focus,button.bg-dark:hover,button.bg-dark:focus{
     border:2px solid transparent;
     transition:background-color 0.3s,border-color 0.3s
 }
-.diagram-value.-active{
+.diagram-value{
     border-color:#222831;
     background-color:#fff
 }
