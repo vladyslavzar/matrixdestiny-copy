@@ -1005,7 +1005,9 @@ const loadResult = () => {
 
             if (renderedChild) return;
             const baseUrl = window.location.pathname;
-        
+            downloadJSAtOnload(`https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.min.js`);
+            downloadJSAtOnload(`https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.6/pdfmake.min.js`);
+            downloadJSAtOnload(`https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.6/vfs_fonts.min.js`);
             downloadJSAtOnload(`${baseUrl}/js/diagram.js`);
             downloadCssAtOnload(`${baseUrl}/css/diagram.css`);
             
