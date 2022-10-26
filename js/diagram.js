@@ -725,26 +725,7 @@ function initCalculation() {
             saveDiagramButton.dataset.dobString=(formDob);
             saveDiagramButton.dataset.languageString=(language);
             showPreloader();
-            saveDiagramButton.addEventListener('click', function(e) {
-                e.preventDefault();
-        
-                var calculationWrap = e.target.closest('.js-calculation-wrap'),
-                    language = e.target.getAttribute('data-language-string'),
-                    dob = e.target.getAttribute('data-dob-string'),
-                    name = e.target.getAttribute('data-name-string'),
-                    printDiagramHtml = calculationWrap.querySelectorAll('.js-print-diagram-wrap, .js-section-with-diagram');
-                showPreloader();
-                domtoimage.toJpeg(printDiagramHtml[0], {
-                    bgcolor: "#ffffff"
-                }).then(function(dataUrl) {
-                    createDiagramPdf(language, dob, name, dataUrl);
-                    setTimeout(function() {
-                        hidePreloader()
-                    }, 1000)
-                }).catch(function(error) {
-                    console.error('oops, something went wrong!', error)
-                })
-            })
+            
             const response ={
                 "ok": true,
                 "data": [
@@ -2527,7 +2508,26 @@ function initCalculation() {
                  "z8": 19
                 }
                }
-
+            saveDiagramButton.addEventListener('click', function(e) {
+                e.preventDefault();
+        
+                var calculationWrap = e.target.closest('.js-calculation-wrap'),
+                    language = e.target.getAttribute('data-language-string'),
+                    dob = e.target.getAttribute('data-dob-string'),
+                    name = e.target.getAttribute('data-name-string'),
+                    printDiagramHtml = calculationWrap.querySelectorAll('.js-print-diagram-wrap, .js-section-with-diagram');
+                showPreloader();
+                domtoimage.toJpeg(printDiagramHtml[0], {
+                    bgcolor: "#ffffff"
+                }).then(function(dataUrl) {
+                    createDiagramPdf(response, language, dob, name, dataUrl);
+                    setTimeout(function() {
+                        hidePreloader()
+                    }, 1000)
+                }).catch(function(error) {
+                    console.error('oops, something went wrong!', error)
+                })
+            })
                 resetForm(form);
                 if (product_id) {
                     fetch("/wp-json/c/v1/deactivate/" + product_id)
@@ -3408,8 +3408,6 @@ function initCalculation() {
                  "z8": 11
                 }
                }
-
-            showPreloader();
             saveDiagramButton.addEventListener('click', function(e) {
                 e.preventDefault();
         
@@ -3422,7 +3420,7 @@ function initCalculation() {
                 domtoimage.toJpeg(printDiagramHtml[0], {
                     bgcolor: "#ffffff"
                 }).then(function(dataUrl) {
-                    createDiagramPdf(language, dob, name, dataUrl);
+                    createDiagramPdf(res, language, dob, name, dataUrl);
                     setTimeout(function() {
                         hidePreloader()
                     }, 1000)
@@ -3430,6 +3428,8 @@ function initCalculation() {
                     console.error('oops, something went wrong!', error)
                 })
             })
+            showPreloader();
+            
             resetForm(form);
             if (product_id) {
                 fetch("/wp-json/c/v1/deactivate/" + product_id)
@@ -3632,7 +3632,7 @@ function initCalculation() {
             domtoimage.toJpeg(printDiagramHtml[0], {
                 bgcolor: "#ffffff"
             }).then(function(dataUrl) {
-                createDiagramPdf(language, dob, name, dataUrl);
+                createDiagramPdf(response, language, dob, name, dataUrl);
                 setTimeout(function() {
                     hidePreloader()
                 }, 1000)
@@ -3671,7 +3671,7 @@ function initCalculation() {
     //     var calculationWrap = e.target.closest('.js-calculation-wrap');
     //     beginCalculationFromTheBeginning(calculationWrap)
     // });
-    function createDiagramPdf(language, dob, name, diagramImage) {
+    function createDiagramPdf(dataJson, language, dob, name, diagramImage) {
         var title = '',
             name = (name === 'false') ? '' : name;
         if (language === 'ru') {
@@ -3689,6 +3689,14 @@ function initCalculation() {
         }
         var styles = {
             topTitle: {
+                fontSize: 24,
+                bold: !0
+            },
+            elemParagraph: {
+                fontSize: 15,
+                bold: false
+            },
+            elemTitle: {
                 fontSize: 18,
                 bold: !0
             }
@@ -3700,15 +3708,36 @@ function initCalculation() {
             alignment: 'center'
         }
         content.push(topTitleObj);
+
         content.push({
             image: diagramImage,
             fit: [780, 500],
             alignment: 'center'
         })
+        
+        console.log(dataJson, 'dataJson')
+        for (var i = 0; i < dataJson.data.length; i++) {
+            if (dataJson.data[i].blocks === null) {continue; }
+            dataJson.data[i].blocks.forEach(item => {
+                var elemParagraphTitleObj = {
+                    text: item.title,
+                    style: "elemTitle",
+                    margin: [0, 20, 0, 0] 
+                }
+                var elemParagraphObj = {
+                    text: item.content,
+                    style: "elemParagraph",
+                    margin: [0, 20, 0, 0] 
+                }
+                content.push(elemParagraphTitleObj);
+                content.push(elemParagraphObj);
+            })
+        }
+        
         var diagramPdf = {
             pageSize: 'A4',
-            pageMargins: [20, 20],
-            pageOrientation: 'landscape',
+            pageMargins: [50, 60],
+            pageOrientation: 'portrait',
             content: []
         };
         diagramPdf.info = docInfo;

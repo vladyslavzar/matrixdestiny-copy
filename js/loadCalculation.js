@@ -953,9 +953,10 @@ const loadResult = () => {
 </div>
     `;
     const downloadJSAtOnload = (filename) => {
+        let head = document.getElementsByTagName('HEAD')[0];
         var element = document.createElement("script");
         element.src = filename;
-        document.body.appendChild(element);
+        head.appendChild(element);
     }
     const downloadCssAtOnload = (filename) => {
     let head = document.getElementsByTagName('HEAD')[0];
