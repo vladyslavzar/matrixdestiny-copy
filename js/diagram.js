@@ -3672,6 +3672,12 @@ function initCalculation() {
     //     beginCalculationFromTheBeginning(calculationWrap)
     // });
     function createDiagramPdf(dataJson, language, dob, name, diagramImage) {
+        pdfMake.fonts = {
+            Roboto: {
+                normal: 'https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/fonts/Roboto/Roboto-Regular.ttf',
+                bold: 'https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/fonts/Roboto/Roboto-Medium.ttf',
+            },
+        }
         var title = '',
             name = (name === 'false') ? '' : name;
         if (language === 'ru') {
