@@ -169,3 +169,19 @@ left: 50%;
 -webkit-transform: translate(-50%, -50%);
 		transform: translate(-50%, -50%);
 }
+
+.slider-forecast-years{
+    margin:10px -15px 30px;
+    display: flex;
+}
+.slider-forecast-years .forecast-years-item{
+    text-align:center;
+    margin-bottom:0;
+    cursor:pointer;
+    padding:5px 10px;
+    border-radius:10px;
+    transition:background-color 0.5s
+}
+.slider-forecast-years .forecast-years-item.-active{
+    background-color:#eeeef3
+}

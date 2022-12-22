@@ -963,7 +963,17 @@ a.bg-dark:hover,a.bg-dark:focus,button.bg-dark:hover,button.bg-dark:focus{
     }
 }
 .slider-forecast-years{
-    margin:10px -15px 30px
+    margin:10px -15px 30px;
+    overflow: hidden;
+}
+
+.slider-forecast-years-inner{
+    display: flex;
+    transform: translateX(-55px);
+    transition: .3s;
+    div{
+        display: inline-block;
+    }
 }
 .slider-forecast-years .forecast-years-item{
     text-align:center;
@@ -973,7 +983,7 @@ a.bg-dark:hover,a.bg-dark:focus,button.bg-dark:hover,button.bg-dark:focus{
     border-radius:10px;
     transition:background-color 0.5s
 }
-.slider-forecast-years .slick-current .forecast-years-item{
+.slider-forecast-years .forecast-years-item.-active{
     background-color:#eeeef3
 }
 .matrix-diagram{

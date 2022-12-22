@@ -952,10 +952,13 @@ const loadResult = () => {
     <a href="" class="btn btn-primary">Проверить другие даты</a>
 </div>
     `;
-    const downloadJSAtOnload = (filename) => {
+    const downloadJSAtOnload = (filename, isModule = false) => {
         let head = document.getElementsByTagName('HEAD')[0];
         var element = document.createElement("script");
         element.src = filename;
+        if (isModule) {
+            element.type = 'module';
+        }
         head.appendChild(element);
     }
     const downloadCssAtOnload = (filename) => {
@@ -1008,7 +1011,7 @@ const loadResult = () => {
             const baseUrl = window.location.pathname;
             downloadJSAtOnload(`https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.min.js`);
             downloadJSAtOnload(`https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.6/pdfmake.min.js`);
-            downloadJSAtOnload(`${baseUrl}/js/diagram.js`);
+            downloadJSAtOnload(`${baseUrl}/js/diagram.js`, true);
             downloadCssAtOnload(`${baseUrl}/css/diagram.css`);
             
             renderedChild=true;

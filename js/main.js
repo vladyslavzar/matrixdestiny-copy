@@ -11,7 +11,7 @@ const anchorScroll = () => {
 }
 
 const downloadJSAtOnload = (filename) => {
-  var element = document.createElement("script");
+  let element = document.createElement("script");
   element.src = filename;
   element.type = 'module';
   document.body.appendChild(element);
